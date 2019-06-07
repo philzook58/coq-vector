@@ -52,6 +52,7 @@ Definition vsub (v1 v2 : V2) := vsum v1 (vnegate v2).
 Definition vEq (v1 v2 : V2) := (x v1) == (x v2) /\ (y v1) == (y v2).
 
 Theorem negatedist (v1 v2 : V2) : vEq (vnegate (vsum v1 v2)) (vsum (vnegate v1) (vnegate v2)).
+Admitted.
 
 
 Theorem symvEq (v1 v2 : V2) (e : vEq v1 v2) : (vEq v2 v1).
@@ -85,13 +86,40 @@ Proof.
 
 Theorem QNonNegSum (x y : Q) (p1 : QNonNeg x) (p2 : QNonNeg y) : QNonNeg (x + y).
 Proof.
-  unfold QNonNeg. unfold QNonNeg in p1.
+Admitted.
+
+ (* unfold QNonNeg. unfold QNonNeg in p1. *)
 
 Theorem dotpos (v : V2) : QNonNeg (dot v v).
 Proof.
-  
-  unfold dot. 
-  
+Admitted.
+
+Definition project (v1 v2 : V2) := vsub v1 (smul (Qdiv (dot v1 v2) (dot v1 v1))  v2).
+
+Definition vzero : V2 := V2make 0 0.
+
+Theorem projectgone (v1 v2 : V2) : (dot v1 (project v2 v1)) == 0.
+unfold dot. unfold project. unfold vsub. unfold vnegate. unfold vsum. unfold dot. unfold smul. simpl.  Abort.
+
+
+(* I need to introduce a new variable for x v1.  Then it hsould be obvious by the ring solver. *)
+
+Definition InHalfSpace (l v : V2) := QNonNeg (dot l v).
+
+
+(*
+
+ Definition Cone (P : V2 -> Prop) := forall x1 x2 : V2, forall NonNeg l, NonNeg l2,   P x1 -> P x2 -> P (l * x1 + l * x2)
+
+Definition Support (l : V2) P := forall x, P x -> InHalfSpace l x   
+ 
+Definition 
+
+forall x1 x2
+
+*)
+ 
+
 (* normsquare -> positive rational 
 Should we perhaps make a positive rationals type? 
 QPos = {N , positive} 
@@ -102,9 +130,11 @@ QPos = {N , positive}
 
 projection
 gram schmidt
+cuachy-schwartz
 
+ *)
 
-*)
+(*
 Theorem qpos  (x : Q) : x * x >= 0.
 Proof.
   destruct x. destruct Qnum.   rewrite Qmult_0_l.
@@ -121,3 +151,4 @@ Compute Z0.
 Compute 0.
 
 Compute QArith.
+*)
