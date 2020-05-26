@@ -1,0 +1,2 @@
+Require Import QArith.
+Goal forall y z : Q,  (Qplus y z) == (Qplus z y). intros. Search (_ + _). apply Qplus_comm.
